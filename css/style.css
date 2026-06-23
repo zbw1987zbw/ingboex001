@@ -440,16 +440,25 @@ p { margin-bottom: 1rem; }
   aspect-ratio: 1;
   background: var(--color-white);
   border-radius: var(--radius-xl);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--color-gray-200);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  color: var(--color-gray-400);
+  text-align: center;
+  padding: 30px;
 }
 
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.hero-image-placeholder i {
+  font-size: 5rem;
+  margin-bottom: 15px;
+  opacity: 0.4;
+}
+
+.hero-image-placeholder p {
+  font-size: 0.9rem;
+  color: var(--color-gray-400);
 }
 
 /* --- Trust Bar --- */
