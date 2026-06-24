@@ -181,12 +181,37 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       if (valid) {
-        // Show success message
-        const btn = contactForm.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        btn.textContent = 'Message Sent! ✓';
+        // 获取表单数据
+        var nameVal = name ? name.value : '';
+        var emailVal = email ? email.value : '';
+        var phoneEl = contactForm.querySelector('#phone');
+        var companyEl = contactForm.querySelector('#company');
+        var productEl = contactForm.querySelector('#product');
+        var phoneVal = phoneEl ? phoneEl.value : '';
+        var companyVal = companyEl ? companyEl.value : '';
+        var productVal = productEl ? productEl.value : '';
+        var messageVal = message ? message.value : '';
+
+        // 构建 mailto 链接
+        var subject = 'Inquiry from ' + nameVal + ' - INGBOEX Website';
+        var body = 'Name: ' + nameVal + '\n';
+        body += 'Email: ' + emailVal + '\n';
+        if (phoneVal) body += 'Phone: ' + phoneVal + '\n';
+        if (companyVal) body += 'Company: ' + companyVal + '\n';
+        if (productVal) body += 'Product Interest: ' + productVal + '\n';
+        body += '\nMessage:\n' + messageVal;
+
+        var mailtoLink = 'mailto:282810882@qq.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+        // 显示成功提示
+        var btn = contactForm.querySelector('button[type="submit"]');
+        var originalText = btn.textContent;
+        btn.textContent = 'Opening Email...';
         btn.style.background = '#10b981';
         btn.disabled = true;
+
+        // 打开邮件客户端
+        window.location.href = mailtoLink;
 
         setTimeout(function() {
           btn.textContent = originalText;
