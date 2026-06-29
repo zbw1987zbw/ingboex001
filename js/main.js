@@ -82,16 +82,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   productTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      const target = this.getAttribute('data-target');
+      const target = this.getAttribute('data-tab') || this.getAttribute('data-target');
 
       // Update tabs
       productTabs.forEach(function(t) { t.classList.remove('active'); });
       this.classList.add('active');
 
-      // Update panels
+      // Update panels - match by id with or without "panel-" prefix
       productPanels.forEach(function(panel) {
         panel.classList.remove('active');
-        if (panel.getAttribute('id') === target) {
+        const panelId = panel.getAttribute('id');
+        if (panelId === target || panelId === 'panel-' + target) {
           panel.classList.add('active');
         }
       });
@@ -186,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var emailVal = email ? email.value : '';
         var phoneEl = contactForm.querySelector('#phone');
         var companyEl = contactForm.querySelector('#company');
-        var productEl = contactForm.querySelector('#product');
+        var productEl = contactForm.querySelector('#product-interest') || contactForm.querySelector('#product');
         var phoneVal = phoneEl ? phoneEl.value : '';
         var companyVal = companyEl ? companyEl.value : '';
         var productVal = productEl ? productEl.value : '';
