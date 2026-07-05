@@ -247,4 +247,37 @@ document.addEventListener('DOMContentLoaded', function() {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+
+  // --- Anti-spam Email Protection ---
+  // Replace all data-email placeholders with obfuscated mailto links
+  document.querySelectorAll('[data-email]').forEach(function(el) {
+    var user = el.getAttribute('data-email');
+    var domain = el.getAttribute('data-domain') || 'ingboex.com';
+    var email = user + '@' + domain;
+    var subject = el.getAttribute('data-subject') || '';
+    var href = 'mailto:' + email;
+    if (subject) href += '?subject=' + encodeURIComponent(subject);
+
+    if (el.tagName === 'A') {
+      el.setAttribute('href', href);
+      // If there's no visible text, show the email
+      if (!el.textContent.trim() || el.querySelector('i.fa-envelope, i.fa-solid.fa-envelope')) {
+        // Icon-only link - don't change text
+      } else if (el.textContent.trim() === email) {
+        // already has email text, keep it
+      }
+    }
+    // Also handle spans that show email text
+    var textSpan = el.querySelector('[data-email-text]');
+    if (textSpan) {
+      textSpan.textContent = email;
+    }
+  });
+
+  // Also handle inline email text replacements
+  document.querySelectorAll('[data-email-text]').forEach(function(el) {
+    var user = el.getAttribute('data-email-text');
+    var domain = el.getAttribute('data-domain') || 'ingboex.com';
+    el.textContent = user + '@' + domain;
+  });
 });
