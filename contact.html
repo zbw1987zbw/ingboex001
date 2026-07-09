@@ -259,6 +259,13 @@
                         <p class="contact-form-desc">If you have any questions concerning our products or services, please fill out the contact form below. We will respond within 24 hours.</p>
 
                         <form class="contact-form" id="contact-form" action="javascript:void(0)" method="POST">
+                            <!-- Honeypot anti-spam field (hidden from humans, bots fill it) -->
+                            <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+                                <label for="website-url">Website URL (leave empty)</label>
+                                <input type="text" id="website-url" name="website-url" tabindex="-1" autocomplete="off">
+                            </div>
+                            <!-- Timestamp for submission speed check -->
+                            <input type="hidden" id="form-loaded-at" name="form-loaded-at" value="">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Name <span class="required">*</span></label>

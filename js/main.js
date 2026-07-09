@@ -150,8 +150,31 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Contact Form Validation ---
   const contactForm = document.querySelector('#contact-form');
   if (contactForm) {
+    // Record form load timestamp for anti-spam speed check
+    var loadedAtInput = contactForm.querySelector('#form-loaded-at');
+    if (loadedAtInput) {
+      loadedAtInput.value = Date.now();
+    }
+
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
+
+      // --- Anti-spam checks ---
+      // 1. Honeypot: if filled, silently reject (bot detected)
+      var honeypot = contactForm.querySelector('#website-url');
+      if (honeypot && honeypot.value.trim() !== '') {
+        return; // Bot filled the hidden field, silently ignore
+      }
+
+      // 2. Speed check: if submitted in under 3 seconds, likely a bot
+      if (loadedAtInput && loadedAtInput.value) {
+        var elapsed = Date.now() - parseInt(loadedAtInput.value);
+        if (elapsed < 3000) {
+          var msgEl = contactForm.querySelector('#message');
+          if (msgEl) showError(msgEl, 'Please take a moment to review your message before sending.');
+          return;
+        }
+      }
 
       let valid = true;
       const name = contactForm.querySelector('#name');
