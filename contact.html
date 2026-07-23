@@ -263,11 +263,15 @@
                         <h2 class="contact-form-title">Send Us a Message</h2>
                         <p class="contact-form-desc">If you have any questions concerning our products or services, please fill out the contact form below. We will respond within 24 hours.</p>
 
-                        <form class="contact-form" id="contact-form" action="javascript:void(0)" method="POST">
+                        <form class="contact-form" id="contact-form" action="https://formsubmit.co/billzhang@ingboex.com" method="POST">
+                            <!-- Formsubmit.co settings -->
+                            <input type="hidden" name="_subject" value="New Inquiry from INGBOEX Website">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_captcha" value="false">
                             <!-- Honeypot anti-spam field (hidden from humans, bots fill it) -->
                             <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
                                 <label for="website-url">Website URL (leave empty)</label>
-                                <input type="text" id="website-url" name="website-url" tabindex="-1" autocomplete="off">
+                                <input type="text" id="website-url" name="_honey" tabindex="-1" autocomplete="off">
                             </div>
                             <!-- Timestamp for submission speed check -->
                             <input type="hidden" id="form-loaded-at" name="form-loaded-at" value="">
@@ -316,9 +320,12 @@
                                 <textarea id="message" name="message" rows="6" required placeholder="Tell us about your requirements, including product interest, quantity, target market, and any customization needs..."></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" id="contact-submit-btn">
                                 <i class="fa-solid fa-paper-plane"></i> Send Message
                             </button>
+
+                            <!-- Form submission feedback -->
+                            <div id="form-feedback" style="display:none;padding:15px 20px;border-radius:var(--radius-md);margin-top:20px;font-size:0.95rem;text-align:center;"></div>
                         </form>
                     </div>
 

@@ -216,33 +216,72 @@ document.addEventListener('DOMContentLoaded', function() {
         var productVal = productEl ? productEl.value : '';
         var messageVal = message ? message.value : '';
 
-        // 构建 mailto 链接
-        var subject = 'Inquiry from ' + nameVal + ' - INGBOEX Website';
-        var body = 'Name: ' + nameVal + '\n';
-        body += 'Email: ' + emailVal + '\n';
-        if (phoneVal) body += 'Phone: ' + phoneVal + '\n';
-        if (companyVal) body += 'Company: ' + companyVal + '\n';
-        if (productVal) body += 'Product Interest: ' + productVal + '\n';
-        body += '\nMessage:\n' + messageVal;
-
-        var mailtoLink = 'mailto:billzhang@ingboex.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-        // 显示成功提示
+        // 显示提交中状态
         var btn = contactForm.querySelector('button[type="submit"]');
         var originalText = btn.textContent;
-        btn.textContent = 'Opening Email...';
-        btn.style.background = '#10b981';
+        btn.textContent = 'Sending...';
         btn.disabled = true;
+        btn.style.opacity = '0.7';
 
-        // 打开邮件客户端
-        window.location.href = mailtoLink;
+        var feedbackEl = contactForm.querySelector('#form-feedback');
 
-        setTimeout(function() {
+        // 通过 Formsubmit.co AJAX 提交
+        fetch('https://formsubmit.co/ajax/billzhang@ingboex.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: 'Inquiry from ' + nameVal + ' - INGBOEX Website',
+            _template: 'table',
+            Name: nameVal,
+            Email: emailVal,
+            Phone: phoneVal,
+            Company: companyVal,
+            'Product Interest': productVal,
+            Message: messageVal
+          })
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
           btn.textContent = originalText;
-          btn.style.background = '';
           btn.disabled = false;
-          contactForm.reset();
-        }, 3000);
+          btn.style.opacity = '';
+
+          if (data.success) {
+            // 提交成功
+            if (feedbackEl) {
+              feedbackEl.style.display = 'block';
+              feedbackEl.style.background = '#d1fae5';
+              feedbackEl.style.color = '#065f46';
+              feedbackEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your message has been sent successfully. We will get back to you within 24 hours.';
+            }
+            contactForm.reset();
+          } else {
+            // 提交失败
+            var errMsg = (data.message) ? data.message : 'Something went wrong. Please try again or email us directly.';
+            if (feedbackEl) {
+              feedbackEl.style.display = 'block';
+              feedbackEl.style.background = '#fef2f2';
+              feedbackEl.style.color = '#991b1b';
+              feedbackEl.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + errMsg;
+            }
+          }
+        })
+        .catch(function(error) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          btn.style.opacity = '';
+
+          // 网络错误时回退到 mailto
+          if (feedbackEl) {
+            feedbackEl.style.display = 'block';
+            feedbackEl.style.background = '#fef3c7';
+            feedbackEl.style.color = '#92400e';
+            feedbackEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Network error. Please try again, or email us directly at billzhang@ingboex.com';
+          }
+        });
       }
     });
   }
