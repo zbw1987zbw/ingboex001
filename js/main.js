@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var feedbackEl = contactForm.querySelector('#form-feedback');
 
         // 通过 Formsubmit.co AJAX 提交
-        fetch('https://formsubmit.co/ajax/billzhang@ingboex.com', {
+        fetch('https://formsubmit.co/ajax/ee2bf3801b47bea8424ea9ce95612b31', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
