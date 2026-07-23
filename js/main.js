@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (productVal) body += 'Product Interest: ' + productVal + '\n';
         body += '\nMessage:\n' + messageVal;
 
-        var mailtoLink = 'mailto:282810882@qq.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        var mailtoLink = 'mailto:billzhang@ingboex.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
         // 显示成功提示
         var btn = contactForm.querySelector('button[type="submit"]');
