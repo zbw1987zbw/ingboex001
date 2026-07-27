@@ -6,27 +6,27 @@
     <meta name="robots" content="index, follow">
     <meta name="description" content="Read the latest insights on personal care appliance manufacturing, OEM/ODM best practices, and industry trends from INGBOEX.">
     <title>Article - INGBOEX | Personal Care Appliance Insights</title>
-    <link rel="canonical" href="https://www.ingboex.com/article.html">
+    <link rel="canonical" href="https://ingboex.com/article.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
     <link rel="apple-touch-icon" href="/images/favicon-32.png">
     <meta name="theme-color" content="#2563eb">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.0">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="Article - INGBOEX | Personal Care Appliance Insights">
     <meta property="og:description" content="Read the latest insights on personal care appliance manufacturing, OEM/ODM best practices, and industry trends from INGBOEX.">
-    <meta property="og:image" content="https://www.ingboex.com/images/banner-news.jpg">
-    <meta property="og:url" content="https://www.ingboex.com/article.html">
+    <meta property="og:image" content="https://ingboex.com/images/banner-news.jpg">
+    <meta property="og:url" content="https://ingboex.com/article.html">
     <meta property="og:site_name" content="INGBOEX">
     <meta property="og:locale" content="en_US">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Article - INGBOEX | Personal Care Appliance Insights">
     <meta name="twitter:description" content="Read the latest insights on personal care appliance manufacturing, OEM/ODM best practices, and industry trends from INGBOEX.">
-    <meta name="twitter:image" content="https://www.ingboex.com/images/banner-news.jpg">
+    <meta name="twitter:image" content="https://ingboex.com/images/banner-news.jpg">
 </head>
 <body>
 
@@ -53,6 +53,7 @@
                             <li><a href="products/hair-straightening-brush.html">Hair Straightening Brush</a></li>
                             <li><a href="products/shaver.html">Shaver</a></li>
                             <li><a href="products/hair-clipper.html">Hair Clipper</a></li>
+                            <li><a href="products/hair-clipper-set.html">Hair Clipper Set</a></li>
                             <li><a href="products/electric-precision-trimmer.html">Electric Precision Trimmer</a></li>
                             <li><a href="products/epilator-and-grooming.html">Epilator &amp; Grooming</a></li>
                         </ul>
@@ -156,7 +157,7 @@
                 <div class="footer-col footer-contact">
                     <h4 class="footer-heading">Contact</h4>
                     <ul class="footer-contact-list">
-                        <li><i class="fa-solid fa-location-dot"></i> Ouhai District, Wenzhou, Zhejiang, China</li>
+                        <li><i class="fa-solid fa-location-dot"></i> 3rd Floor No.1 Building, No.50 Dongfang South Road, Wenzhou National University Science Park, Ouhai District, Wenzhou, Zhejiang, China</li>
                         <li><i class="fa-solid fa-phone"></i> <a href="tel:+8613758758439">+86-137 5875 8439</a></li>
                         <li><i class="fa-solid fa-envelope"></i> <a href="#" data-email="sarahchang" class="email-protected">sarahchang@ingboex.com</a></li>
                         <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/8615167896815?text=Need%20wholesale%20personal%20care%20appliances%20or%20OEM%2FODM%20custom%20service%3F%20Please%20send%20product%20type%2C%20quantity%20%26%20target%20market%20for%20quotation." target="_blank" rel="noopener noreferrer">+86-151 6789 6815</a></li>
@@ -254,6 +255,32 @@
         document.getElementById('article-body').innerHTML = article.body;
         document.getElementById('breadcrumb-title').textContent = article.title.substring(0, 30) + '...';
         document.title = article.title + ' - INGBOEX';
+
+        // 动态注入 Article 结构化数据 (JSON-LD)，为每篇文章生成独立富结果
+        try {
+            var isoDate = (new Date(article.date)).toISOString();
+        } catch (e) {
+            var isoDate = article.date;
+        }
+        var articleLd = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": article.title,
+            "datePublished": isoDate,
+            "dateModified": isoDate,
+            "author": { "@type": "Organization", "name": "Wenzhou Ingboex Technology Co., Ltd." },
+            "publisher": {
+                "@type": "Organization",
+                "name": "INGBOEX",
+                "logo": { "@type": "ImageObject", "url": "https://ingboex.com/images/logo.png" }
+            },
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://ingboex.com/article.html?id=" + articleId },
+            "image": "https://ingboex.com/images/banner-news.jpg"
+        };
+        var ldScript = document.createElement('script');
+        ldScript.type = 'application/ld+json';
+        ldScript.textContent = JSON.stringify(articleLd);
+        document.head.appendChild(ldScript);
     } else {
         document.getElementById('article-title').textContent = 'Article Not Found';
         document.getElementById('article-body').innerHTML = '<p>The article you are looking for does not exist. <a href="news.html">Return to all articles</a>.</p>';
